@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    {% if posts is empty %}
+    <p>Actualité non trouvée avec cet ID.</p>
+    {% else %}
+        <div class="container w-100">
+            <div class="row justify-content-around">
+
+                    <div class="card text-center w-100 mt-4 p-0">
+                        <div class="card-header">{{ posts.description }}</div>
+                            <div class="card-body">
+
+                                <h6 class="card-title text-muted">{{ posts.title }}</h6>
+                                <p class="card-text">{{ posts.content }}</p>
+                                <p class="card-text">Information supplémentaire:<br>{{ posts.other }}</p>
+                                
+                                <p class="card-text">Adresse:<br>{{ posts.localisation}} {{ posts.ville }}</p>
+
+
+                            </div>
+                        <div class="card-footer text-muted">Créé par {{ posts.creator.username }} le {{ posts.date|date('d/m/Y à H:i:s') }}</div>
+
+                    </div>
+
+                <div class="card text-left w-100 mt-4 p-0">
+                    <div class="card-header">Commentaires ({{ posts.comments.count }})</div>
+                        <div class="card-body">
+                    {% for comment in posts.comments %}
+                        <h6 class="card-title text-muted pb-0 mb-0 mt-2"><b class="fs-4">{{ comment.text }}</b> de {{ comment.user.username }}</h6>
+                        <a class="pt-0 mt-0" href={{ path('app_report', {'id':comment.id}) }}>Signaler ({{ comment.reports.count }})</a>
+                          <div>
+ <a href="{{ path('like_comment', {'id': comment.id}) }}" class="btn btn-success">J'aime</a>
+                    <a href="{{ path('dislike_comment', {'id': comment.id}) }}" class="btn btn-danger">Je n'aime pas</a>                </div>
+                    {% endfor %}
+                    </div>
+                </div>
+
+
+
+                <div class="card text-center w-100 mt-4 p-0 mb-4">
+                    <div class="card-header">Ajouter un commentaire</div>
+                    <div class="card-body">
+                    {% if user %}
+                        {{ form_start(commentForm, {'action': path('add_comment', {'id': posts.id})}) }}
+                            {{ form_widget(commentForm.text) }}
+                            <button type="submit">Envoyer</button>
+                        {{ form_end(commentForm) }}
+                    {% else %}
+                        <h6 class="card-title text-muted">Tu dois être connecté(e) pour ça!</h6>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

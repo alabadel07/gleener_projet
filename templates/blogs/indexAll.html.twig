@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    {% if blogs is empty %}
+    <p>Aucun articles n'a été trouvée.</p>
+    {% else %}
+
+            <div class="container w-100">
+                <h1 class="text-center mt-4">Toutes les Articles</h1>
+
+                <div class="row justify-content-around flex-wrap overflow-auto">
+
+                    {% for blog in blogs %}
+                        <div class="card text-center w-25 mt-4 p-0">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ blog.title }}</h5>
+                                <h6 class="card-title muted">{{ blog.description }}</h6>
+                                <p class="card-text">{{ blog.content }}</p>
+                                <a href={{ path('app_blog', {'id':blog.id})}} class="btn btn-primary">Voir plus</a>
+                            </div>
+                            <div class="card-footer text-muted">Publié le {{ blog.date|date('d/m/Y') }} par {{ blog.creator.username }}</div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+    {% endif %}
+{% endblock %}
+

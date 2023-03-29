@@ -1,0 +1,21 @@
+<div class="container w-100">
+    <div class="row justify-content-around">
+
+        <div class="card text-center w-100 mt-4 p-0 mb-4">
+        
+            <div class="card-header">Signaler un commentaire</div>
+            <div class="card-body">
+                <p>Commentaire: <b>{{ comments.text }}</b> de {{ comments.user.username }}</p>
+               
+                {% if user %}
+                    {{ form_start(reportForm, {'action': path('add_report', {'id': comments.id})}) }}
+                    {{ form_widget(reportForm.reason) }}
+                    <button type="submit">Envoyer</button>
+                    {{ form_end(reportForm) }}
+                {% else %}
+                    <h6 class="card-title text-muted">Tu dois être connecté(e) pour ça!</h6>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

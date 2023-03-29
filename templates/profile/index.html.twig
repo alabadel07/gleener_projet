@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UEL316 - Profil de {{ user.username }}{% endblock %}
+
+{% block body %}
+    {% if user != null %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Profil de <b>{{ user.username }}</b></div>
+                    <div class="card-body">
+                        <p class="fs-3"><b>Identifiant:</b> {{ user.username }}</p>
+                        <p class="fs-3"><b>Prénom:</b> {{ user.firstname }}</p>
+                        <p class="fs-3"><b>Nom:</b> {{ user.lastname }}</p>
+
+                        {% set roles = '' %}
+                        {% for role in user.roles %}
+                            {% set roles = roles ~ ' ' ~ role %}
+                        {% endfor %}
+                        <p class="fs-3"><b>Rôles:</b> {{ roles }}</p>
+
+                        <p class="fs-3"><b>E-Mail:</b> {{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
