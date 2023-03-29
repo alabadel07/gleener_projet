@@ -29,16 +29,29 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'multiple' => true,
                 'choice_translation_domain' => 'user',
-                'choices' => User::ROLES
+                'choices' => User::ROLES,
+                'attr' => array(
+                    'class' => 'form-select form-select-sm'
+                ),
             ))
-            ->add('password', RepeatedType::class, [
+            ->add('password', RepeatedType::class, [    
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passe doivent correspondre.',
                 'attr' => ['autocomplete' => 'new-password'],
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter le mot de passe'],
+                'first_options' => [
+                    'label' =>  'Mot de passe:',
+                    'attr' => [
+                        'class' => 'form-control form-group-password'
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Répéter le mot de passe :',
+                    'attr' => [
+                        'class' => 'form-control form-group-password'
+                    ]
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Entrez un mot de passe.',
